@@ -944,7 +944,7 @@ function createVLESSSub(userID_Path, hostName) {
 			proxyIPs.forEach((proxyIP) => {
 				const vlessSecHttps = `vless://${userID}@${proxyIP}${commonUrlPart_https}-${proxyIP}-pp-worker`;
 				output.push(`${vlessMainHttps}`);
-				output.push(`${vlessSecHttps}`);
+				//output.push(`${vlessSecHttps}`);
 			});
 		});
 	});
