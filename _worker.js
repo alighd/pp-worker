@@ -924,7 +924,7 @@ function createVLESSSub(userID_Path, hostName) {
 			portArray_http.forEach((port) => {
 				//const commonUrlPart_http = `:${port}?encryption=none&security=none&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#${hostName}-HTTP`;
 				
-				  const commonUrlPart_https = `:${port}?encryption=none&security=tls&sni=${hostName}&type=ws&host=${hostName}&alpn=h2%2Chttp%2F1.1&fp=randomized&allowinsecure=1&path=%2F%3Fed%3D2048#${hostName}-HTTPS`;
+				  const commonUrlPart_http = `:${port}?encryption=none&security=tls&sni=${hostName}&type=ws&host=${hostName}&alpn=h2%2Chttp%2F1.1&fp=randomized&allowinsecure=1&path=%2F%3Fed%3D2048#${hostName}-HTTPS`;
 			
 				
 				const vlessMainHttp = `vless://${userID}@${hostName}${commonUrlPart_http}`;
