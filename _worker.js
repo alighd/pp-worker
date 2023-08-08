@@ -905,8 +905,8 @@ header.push(``);
 
 
 function createVLESSSub(userID_Path, hostName) {
-	//let portArray_http = [80, 8080, 8880, 2052, 2086, 2095];
-	let portArray_http = [];
+	let portArray_http = [80, 8080, 8880, 2052, 2086, 2095];
+	//let portArray_http = [];
 	let portArray_https = [443, 8443, 2053, 2096, 2087, 2083];
 
 	// Split the userIDs into an array
@@ -922,7 +922,11 @@ function createVLESSSub(userID_Path, hostName) {
 		if (!hostName.includes('pages.dev')) {
 			// Iterate over all ports for http
 			portArray_http.forEach((port) => {
-				const commonUrlPart_http = `:${port}?encryption=none&security=none&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#${hostName}-HTTP`;
+				//const commonUrlPart_http = `:${port}?encryption=none&security=none&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#${hostName}-HTTP`;
+				
+				  const commonUrlPart_https = `:${port}?encryption=none&security=tls&sni=${hostName}&type=ws&host=${hostName}&alpn=h2%2Chttp%2F1.1&fp=randomized&allowinsecure=1&path=%2F%3Fed%3D2048#${hostName}-HTTPS`;
+			
+				
 				const vlessMainHttp = `vless://${userID}@${hostName}${commonUrlPart_http}`;
 
 				// For each proxy IP, generate a VLESS configuration and add to output
@@ -936,14 +940,14 @@ function createVLESSSub(userID_Path, hostName) {
 		// Iterate over all ports for https
 		portArray_https.forEach((port) => {
 			//const commonUrlPart_https = `:${port}?encryption=none&security=tls&sni=${hostName}&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#${hostName}-HTTPS`;
-			   const commonUrlPart_https = `:${port}?encryption=none&security=tls&sni=${hostName}&type=ws&host=${hostName}&alpn=h2%2Chttp%2F1.1&fp=randomized&allowinsecure=1&path=%2F%3Fed%3D2048#${hostName}-HTTPS`;
+			  const commonUrlPart_https = `:${port}?encryption=none&security=tls&sni=${hostName}&type=ws&host=${hostName}&alpn=h2%2Chttp%2F1.1&fp=randomized&allowinsecure=1&path=%2F%3Fed%3D2048#${hostName}-HTTPS`;
 			
-			const vlessMainHttps = `vless://${userID}@${hostName}${commonUrlPart_https}`;
+			  const vlessMainHttps = `vless://${userID}@${hostName}${commonUrlPart_https}`;
 
 			// For each proxy IP, generate a VLESS configuration and add to output
 			proxyIPs.forEach((proxyIP) => {
 				 const vlessSecHttps = `vless://${userID}@${proxyIP}${commonUrlPart_https}-${proxyIP}-pp-worker`;
-				// output.push(`${vlessMainHttps}`);
+				  output.push(`${vlessMainHttps}`);
 				 output.push(`${vlessSecHttps}`);
 			});
 		});
