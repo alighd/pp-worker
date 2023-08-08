@@ -10,7 +10,8 @@ const proxyIPs = ['mci.ircf.space','mtn.ircf.space','mkh.ircf.space','rtl.ircf.s
 //const proxyIPs = ['104.31.16.161'];
 let proxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
 
-let dohURL = 'https://1.1.1.1/dns-query';
+//let dohURL = 'https://1.1.1.1/dns-query';
+let dohURL = 'https://dns.digitalsize.net/dns-query';
 // (dohURL) list :
 // https://cloudflare-dns.com/dns-query
 // https://dns.google/dns-query
