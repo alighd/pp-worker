@@ -4,8 +4,16 @@ import { connect } from 'cloudflare:sockets';
 // [Windows] Press "Win + R", input cmd and run:  Powershell -NoExit -Command "[guid]::NewGuid()"
 let userID = 'f84913ee-a430-4ff5-bb8a-2826a95345ee';
 
-const proxyIPs = ['mci.ircf.space','mtn.ircf.space','mkh.ircf.space','rtl.ircf.space','hwb.ircf.space','ast.ircf.space','sht.ircf.space',
-'prs.ircf.space','mbt.ircf.space','ask.ircf.space','rsp.ircf.space','afn.ircf.space','ztl.ircf.space','psm.ircf.space'
+const proxyIPs = [
+	'mci.ircf.space',
+	'mtn.ircf.space',
+	'mkh.ircf.space',
+	'rtl.ircf.space',
+	'hwb.ircf.space',
+	'ast.ircf.space',
+	'sht.ircf.space',
+	'prs.ircf.space',
+	'psm.ircf.space'
 ];
 //const proxyIPs = ['104.31.16.161'];
 let proxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
@@ -927,9 +935,9 @@ function createVLESSSub(userID_Path, hostName) {
 			portArray_http.forEach((port) => {
 				const commonUrlPart_http = `:${port}?encryption=none&security=none&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#${hostName}-HTTP&alpn=h2%2Chttp%2F1.1&fp=chrome`;
 				const vlessMainHttp = `vless://${userID}@${hostName}${commonUrlPart_http}`;
-                    var proxyIPtest=proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
+                   
 				// For each proxy IP, generate a VLESS configuration and add to output
-				proxyIPs.forEach((proxyIPtest) => {
+				proxyIPs.forEach((proxyIP) => {
 					const vlessSecHttp = `vless://${userID}@${proxyIP}${commonUrlPart_http}-${proxyIP}-pp-worker`;
 					output.push(`${vlessMainHttp}`);
 					output.push(`${vlessSecHttp}`);
@@ -940,9 +948,9 @@ function createVLESSSub(userID_Path, hostName) {
 		portArray_https.forEach((port) => {
 			const commonUrlPart_https = `:${port}?encryption=none&security=tls&sni=${hostName}&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#${hostName}-HTTPS&alpn=h2%2Chttp%2F1.1&fp=chrome`;
 			const vlessMainHttps = `vless://${userID}@${hostName}${commonUrlPart_https}`;
-            var proxyIPtest1=proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
+            
 			// For each proxy IP, generate a VLESS configuration and add to output
-			proxyIPs.forEach((proxyIPtest1) => {
+			proxyIPs.forEach((proxyIP1) => {
 				const vlessSecHttps = `vless://${userID}@${proxyIP}${commonUrlPart_https}-${proxyIP}-pp-worker`;
 				output.push(`${vlessMainHttps}`);
 				output.push(`${vlessSecHttps}`);
