@@ -4,22 +4,10 @@ import { connect } from 'cloudflare:sockets';
 // [Windows] Press "Win + R", input cmd and run:  Powershell -NoExit -Command "[guid]::NewGuid()"
 let userID = 'f84913ee-a430-4ff5-bb8a-2826a95345ee';
 
-const proxyIPs = [
-	'mci.ircf.space',
-	'mtn.ircf.space',
-	'mkh.ircf.space',
-	'rtl.ircf.space',
-	'hwb.ircf.space',
-	'ast.ircf.space',
-	'sht.ircf.space',
-	'prs.ircf.space',
-	'psm.ircf.space'
-];
-//const proxyIPs = ['104.31.16.161'];
+const proxyIPs = ['mtn.ircf.space', 'mkh.ircf.space', 'mci.ircf.space', 'rtl.ircf.space'];
 let proxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
 
-//let dohURL = 'https://1.1.1.1/dns-query';
-let dohURL = 'https://dns.digitalsize.net/dns-query';
+let dohURL = 'https://1.1.1.1/dns-query';
 // (dohURL) list :
 // https://cloudflare-dns.com/dns-query
 // https://dns.google/dns-query
@@ -917,7 +905,8 @@ header.push(``);
 
 
 function createVLESSSub(userID_Path, hostName) {
-	let portArray_http = [80, 8080, 8880, 2052, 2086, 2095];
+	//let portArray_http = [80, 8080, 8880, 2052, 2086, 2095];
+	let portArray_http = [];
 	let portArray_https = [443, 8443, 2053, 2096, 2087, 2083];
 
 	// Split the userIDs into an array
@@ -933,9 +922,9 @@ function createVLESSSub(userID_Path, hostName) {
 		if (!hostName.includes('pages.dev')) {
 			// Iterate over all ports for http
 			portArray_http.forEach((port) => {
-				const commonUrlPart_http = `:${port}?encryption=none&security=none&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#${hostName}-HTTP&alpn=h2%2Chttp%2F1.1&fp=chrome`;
+				const commonUrlPart_http = `:${port}?encryption=none&security=none&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#${hostName}-HTTP`;
 				const vlessMainHttp = `vless://${userID}@${hostName}${commonUrlPart_http}`;
-                   
+
 				// For each proxy IP, generate a VLESS configuration and add to output
 				proxyIPs.forEach((proxyIP) => {
 					const vlessSecHttp = `vless://${userID}@${proxyIP}${commonUrlPart_http}-${proxyIP}-pp-worker`;
@@ -946,11 +935,11 @@ function createVLESSSub(userID_Path, hostName) {
 		}
 		// Iterate over all ports for https
 		portArray_https.forEach((port) => {
-			const commonUrlPart_https = `:${port}?encryption=none&security=tls&sni=${hostName}&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#${hostName}-HTTPS&alpn=h2%2Chttp%2F1.1&fp=chrome`;
+			const commonUrlPart_https = `:${port}?encryption=none&security=tls&sni=${hostName}&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#${hostName}-HTTPS`;
 			const vlessMainHttps = `vless://${userID}@${hostName}${commonUrlPart_https}`;
-            
+
 			// For each proxy IP, generate a VLESS configuration and add to output
-			proxyIPs.forEach((proxyIP1) => {
+			proxyIPs.forEach((proxyIP) => {
 				const vlessSecHttps = `vless://${userID}@${proxyIP}${commonUrlPart_https}-${proxyIP}-pp-worker`;
 				output.push(`${vlessMainHttps}`);
 				output.push(`${vlessSecHttps}`);
